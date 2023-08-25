@@ -71,6 +71,7 @@ func TestGetAccount(t *testing.T){
 
 	for i := range testCases {
 		tc := testCases[i]
+		
 
 		t.Run(tc.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
@@ -79,7 +80,7 @@ func TestGetAccount(t *testing.T){
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
 
-			server := NewServer(store)
+			server := NewTestServer(t, store)
 			recorder := httptest.NewRecorder()
 	
 			url := fmt.Sprintf("/accounts/%d", tc.accountID)
